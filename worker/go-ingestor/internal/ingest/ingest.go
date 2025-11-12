@@ -2,7 +2,6 @@ package ingest
 
 import (
 	"context"
-	"encoding/json"
 	"log"
 	"time"
 
@@ -145,8 +144,7 @@ func M365(ctx context.Context, cfg config.Config, hc httpx.Doer, pcli *portapi.C
 			if dn := str(u["displayName"]); dn != "" {
 				hash = dn
 			} else {
-				b, _ := json.Marshal(u)
-				hash = string(b)
+				hash = stableMapFingerprint(u)
 			}
 		}
 		userProps := map[string]any{
@@ -179,5 +177,8 @@ func M365(ctx context.Context, cfg config.Config, hc httpx.Doer, pcli *portapi.C
 			}
 		}
 		count++
+	}
+	if len(users) > maxUsersPerRun {
+		log.Printf("warn: m365 user detail truncated: processed %d of %d rows", maxUsersPerRun, len(users))
 	}
 }

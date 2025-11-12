@@ -30,6 +30,7 @@ func FetchSeats(ctx context.Context, hc httpx.Doer, base, apiVer, token, org str
 		req.Header.Set("Accept", "application/vnd.github+json")
 		req.Header.Set("X-GitHub-Api-Version", apiVer)
 		req.Header.Set("Authorization", "Bearer "+token)
+		httpx.SetUserAgent(req)
 		resp, err := httpx.DoWithRetry(ctx, hc, req, 3)
 		if err != nil {
 			return nil, err

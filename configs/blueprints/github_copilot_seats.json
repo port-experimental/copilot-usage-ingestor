@@ -26,5 +26,7 @@
       "record_date",
       "seats_total"
     ]
-  }
+  },
+  "calculationProperties": {},
+  "mirrorProperties": {}
 }

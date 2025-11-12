@@ -100,6 +100,12 @@
       "target": "github_copilot_seats",
       "required": false,
       "many": false
+    },
+    "team_usage": {
+      "title": "Github Port Team",
+      "target": "_team",
+      "required": false,
+      "many": false
     }
   }
 }

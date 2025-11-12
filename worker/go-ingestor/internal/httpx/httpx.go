@@ -11,6 +11,12 @@ import (
 	"time"
 )
 
+const DefaultUserAgent = "copilot-usage-ingestor/0.1"
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
 // Doer matches http.Client.Do; used for dependency injection/testing.
 type Doer interface {
 	Do(*http.Request) (*http.Response, error)
@@ -32,6 +38,16 @@ func New() *http.Client {
 	return &http.Client{
 		Transport: tr,
 		Timeout:   30 * time.Second,
+	}
+}
+
+// SetUserAgent ensures every outbound request carries a descriptive UA header.
+func SetUserAgent(req *http.Request) {
+	if req == nil {
+		return
+	}
+	if req.Header.Get("User-Agent") == "" {
+		req.Header.Set("User-Agent", DefaultUserAgent)
 	}
 }
 

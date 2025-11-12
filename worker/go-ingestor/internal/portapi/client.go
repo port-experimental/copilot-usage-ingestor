@@ -36,6 +36,7 @@ func NewClient(ctx context.Context, hc httpx.Doer, region, accessToken, clientID
 		b, _ := json.Marshal(body)
 		req, _ := http.NewRequestWithContext(ctx, "POST", ep, bytes.NewReader(b))
 		req.Header.Set("Content-Type", "application/json")
+		httpx.SetUserAgent(req)
 		resp, err := httpx.DoWithRetry(ctx, hc, req, 3)
 		if err != nil {
 			return nil, fmt.Errorf("port auth: %w", err)
@@ -62,6 +63,7 @@ func (p *Client) UpsertEntity(ctx context.Context, blueprint string, entity any)
 	req, _ := http.NewRequestWithContext(ctx, "POST", ep, bytes.NewReader(b))
 	req.Header.Set("Authorization", "Bearer "+p.token)
 	req.Header.Set("Content-Type", "application/json")
+	httpx.SetUserAgent(req)
 	resp, err := httpx.DoWithRetry(ctx, p.client, req, 3)
 	if err != nil {
 		return err

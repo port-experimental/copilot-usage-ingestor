@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"sort"
 	"strings"
 
 	"github.com/port-experimental/copilot-usage-ingestor/internal/httpx"
@@ -65,6 +66,7 @@ func postWebhook(ctx context.Context, hc httpx.Doer, urlStr, secret string, payl
 	b, _ := json.Marshal(payload)
 	req, _ := http.NewRequestWithContext(ctx, "POST", urlStr, bytes.NewReader(b))
 	req.Header.Set("Content-Type", "application/json")
+	httpx.SetUserAgent(req)
 	if secret != "" {
 		req.Header.Set("X-Signature", signBodySHA256(secret, b))
 	}
@@ -87,4 +89,23 @@ func signBodySHA256(secret string, body []byte) string {
 	m := hmac.New(sha256.New, []byte(secret))
 	m.Write(body)
 	return hex.EncodeToString(m.Sum(nil))
+}
+
+func stableMapFingerprint(m map[string]any) string {
+	if len(m) == 0 {
+		return ""
+	}
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	var b strings.Builder
+	for _, k := range keys {
+		b.WriteString(k)
+		b.WriteByte('=')
+		b.WriteString(fmt.Sprintf("%v", m[k]))
+		b.WriteByte(';')
+	}
+	return b.String()
 }

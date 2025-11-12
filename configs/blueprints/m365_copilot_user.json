@@ -1,7 +1,7 @@
 {
   "identifier": "m365_copilot_user",
   "title": "M365 Copilot User Detail",
-  "icon": "User",
+  "icon": "Microsoft",
   "schema": {
     "properties": {
       "period": {
@@ -71,5 +71,22 @@
       "report_date",
       "user_hash"
     ]
+  },
+  "mirrorProperties": {},
+  "calculationProperties": {},
+  "aggregationProperties": {},
+  "relations": {
+    "m365_copilot_usage_summary": {
+      "title": "M365 Copilot User Summary",
+      "target": "m365_copilot_usage_summary",
+      "required": false,
+      "many": false
+    },
+    "m365_copilot_port_user": {
+      "title": "m365_copilot_port_user",
+      "target": "_user",
+      "required": false,
+      "many": false
+    }
   }
 }
