@@ -1,0 +1,27 @@
+{
+  "identifier": "m365-copilot-summary-webhook",
+  "title": "M365 Copilot Summary",
+  "enabled": true,
+  "mappings": [
+    {
+      "filter": ".body.kind == \"m365-copilot-summary\"",
+      "blueprint": "m365_copilot_usage_summary",
+      "entity": {
+        "identifier": ".body.record.period + \"@\" + .body.record.report_date",
+        "title": "\"M365 Copilot \" + .body.record.period + \" \" + .body.record.report_date",
+        "properties": {
+          "period": ".body.record.period",
+          "report_date": ".body.record.report_date",
+          "enabled_user_count": ".body.record.enabled_user_count",
+          "active_user_count": ".body.record.active_user_count",
+          "sku_total": ".body.record.sku_total"
+        }
+      }
+    }
+  ],
+  "security": {
+    "secret": "set-a-strong-secret",
+    "signatureHeaderName": "X-Signature",
+    "signatureAlgorithm": "sha256"
+  }
+}

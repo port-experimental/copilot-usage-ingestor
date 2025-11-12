@@ -1,0 +1,105 @@
+{
+  "identifier": "github_copilot_usage",
+  "title": "GitHub Copilot Usage",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "record_date": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Record Date"
+      },
+      "breakdown": {
+        "type": "object",
+        "title": "Breakdown"
+      },
+      "total_suggestions_count": {
+        "type": "number",
+        "title": "Total Suggestions"
+      },
+      "total_acceptances_count": {
+        "type": "number",
+        "title": "Total Acceptances"
+      },
+      "total_lines_suggested": {
+        "type": "number",
+        "title": "Lines Suggested"
+      },
+      "total_lines_accepted": {
+        "type": "number",
+        "title": "Lines Accepted"
+      },
+      "total_active_users": {
+        "type": "number",
+        "title": "Active Users"
+      },
+      "total_chat_acceptances": {
+        "type": "number",
+        "title": "Chat Acceptances"
+      },
+      "total_chat_turns": {
+        "type": "number",
+        "title": "Chat Turns"
+      },
+      "total_active_chat_users": {
+        "type": "number",
+        "title": "Active Chat Users"
+      },
+      "git_hub_org": {
+        "type": "string",
+        "title": "GitHub Org"
+      },
+      "git_hub_team": {
+        "type": "string",
+        "title": "GitHub Team"
+      },
+      "editor_top": {
+        "type": "string",
+        "title": "Top Editor (by engaged users)"
+      },
+      "language_top": {
+        "type": "string",
+        "title": "Top Language (by engaged users)"
+      },
+      "seats_total": {
+        "type": "number",
+        "title": "Seats (Org total)",
+        "description": "Optional enrichment from seats snapshot"
+      },
+      "seat_utilization_rate": {
+        "type": "number",
+        "title": "Seat Utilization %"
+      }
+    },
+    "required": [
+      "record_date",
+      "git_hub_org",
+      "total_active_users"
+    ]
+  },
+  "calculationProperties": {
+    "acceptance_rate": {
+      "title": "Acceptance Rate %",
+      "type": "number",
+      "calculation": "if (.properties.total_suggestions_count == 0) then 0 else ((.properties.total_acceptances_count /.properties.total_suggestions_count) * 100 | round) end"
+    },
+    "lines_acceptance_ratio": {
+      "title": "Lines Acceptance %",
+      "type": "number",
+      "calculation": "if (.properties.total_lines_suggested == 0) then 0 else ((.properties.total_lines_accepted /.properties.total_lines_suggested) * 100 | round) end"
+    },
+    "chat_adoption_rate": {
+      "title": "Chat Adoption %",
+      "type": "number",
+      "calculation": "if (.properties.total_active_users == 0) then 0 else ((.properties.total_active_chat_users /.properties.total_active_users) * 100 | round) end"
+    }
+  },
+  "relations": {
+    "seats_snapshot": {
+      "title": "Seats Snapshot",
+      "target": "github_copilot_seats",
+      "required": false,
+      "many": false
+    }
+  }
+}

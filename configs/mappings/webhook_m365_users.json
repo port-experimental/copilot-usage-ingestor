@@ -1,0 +1,35 @@
+{
+  "identifier": "m365-copilot-users-webhook",
+  "title": "M365 Copilot Users",
+  "enabled": true,
+  "mappings": [
+    {
+      "filter": ".body.kind == \"m365-copilot-users\"",
+      "blueprint": "m365_copilot_user",
+      "entity": {
+        "identifier": ".body.user.user_hash // .body.user.user_principal_name",
+        "title": ".body.user.user_principal_name // (\"User \" + .body.user.user_hash)",
+        "properties": {
+          "period": ".body.user.period",
+          "report_date": ".body.user.report_date",
+          "user_principal_name": ".body.user.user_principal_name",
+          "user_hash": ".body.user.user_hash",
+          "last_activity_date": ".body.user.last_activity_date",
+          "teams_copilot_last_activity": ".body.user.teams_copilot_last_activity",
+          "word_copilot_last_activity": ".body.user.word_copilot_last_activity",
+          "excel_copilot_last_activity": ".body.user.excel_copilot_last_activity",
+          "ppt_copilot_last_activity": ".body.user.ppt_copilot_last_activity",
+          "outlook_copilot_last_activity": ".body.user.outlook_copilot_last_activity",
+          "onenote_copilot_last_activity": ".body.user.onenote_copilot_last_activity",
+          "loop_copilot_last_activity": ".body.user.loop_copilot_last_activity",
+          "chat_last_activity": ".body.user.chat_last_activity"
+        }
+      }
+    }
+  ],
+  "security": {
+    "secret": "set-a-strong-secret",
+    "signatureHeaderName": "X-Signature",
+    "signatureAlgorithm": "sha256"
+  }
+}

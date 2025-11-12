@@ -1,0 +1,40 @@
+name: AI Usage Ingest
+
+on:
+  schedule:
+    - cron: "30 3 * * *" # 03:30 UTC daily
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions: { contents: read }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22" }
+      - name: Build
+        run: go build -o ingest ./worker/go-ingestor/...
+      - name: Run
+        env:
+          PORT_REGION: ${{ secrets.PORT_REGION }}
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+          PORT_ACCESS_TOKEN: ${{ secrets.PORT_ACCESS_TOKEN }}
+          USE_PORT_WEBHOOK: ${{ secrets.USE_PORT_WEBHOOK }}
+          PORT_WEBHOOK_SECRET: ${{ secrets.PORT_WEBHOOK_SECRET }}
+          PORT_WEBHOOK_SEATS_URL: ${{ secrets.PORT_WEBHOOK_SEATS_URL }}
+          PORT_WEBHOOK_M365_SUMMARY_URL: ${{ secrets.PORT_WEBHOOK_M365_SUMMARY_URL }}
+          PORT_WEBHOOK_M365_USERS_URL: ${{ secrets.PORT_WEBHOOK_M365_USERS_URL }}
+          GITHUB_ORG: ${{ secrets.GITHUB_ORG }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_API_BASE: https://api.github.com
+          GITHUB_API_VERSION: 2022-11-28
+          MS_TENANT_ID: ${{ secrets.MS_TENANT_ID }}
+          MS_CLIENT_ID: ${{ secrets.MS_CLIENT_ID }}
+          MS_CLIENT_SECRET: ${{ secrets.MS_CLIENT_SECRET }}
+          GRAPH_API_BASE: https://graph.microsoft.com
+          M365_COPILOT_SKUS: ${{ secrets.M365_COPILOT_SKUS }}
+          PERIOD_DAYS: 30
+          SEATS_ACTIVE_WINDOW_DAYS: 14
+        run: ./ingest

@@ -1,0 +1,44 @@
+{
+  "identifier": "m365_copilot_usage_summary",
+  "title": "M365 Copilot Usage Summary",
+  "icon": "Microsoft",
+  "schema": {
+    "properties": {
+      "period": {
+        "type": "string",
+        "title": "Period (D7/D30/D90/D180/ALL)"
+      },
+      "report_date": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Report Date"
+      },
+      "enabled_user_count": {
+        "type": "number",
+        "title": "Enabled Users"
+      },
+      "active_user_count": {
+        "type": "number",
+        "title": "Active Users"
+      },
+      "sku_total": {
+        "type": "number",
+        "title": "Licenses (SKUs) Total",
+        "description": "Filtered by configured Copilot SKUs"
+      }
+    },
+    "required": [
+      "period",
+      "report_date",
+      "enabled_user_count",
+      "active_user_count"
+    ]
+  },
+  "calculationProperties": {
+    "license_utilization_rate": {
+      "title": "License Utilization %",
+      "type": "number",
+      "calculation": "if (.properties.sku_total == 0) then 0 else ((.properties.active_user_count /.properties.sku_total) * 100 | round) end"
+    }
+  }
+}

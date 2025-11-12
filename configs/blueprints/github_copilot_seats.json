@@ -1,0 +1,30 @@
+{
+  "identifier": "github_copilot_seats",
+  "title": "GitHub Copilot Seats Snapshot",
+  "icon": "Github",
+  "schema": {
+    "properties": {
+      "record_date": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Record Date"
+      },
+      "seats_total": {
+        "type": "number",
+        "title": "Seats Total"
+      },
+      "seats_active_14d": {
+        "type": "number",
+        "title": "Seats Active (14d)"
+      },
+      "seats_active_30d": {
+        "type": "number",
+        "title": "Seats Active (30d)"
+      }
+    },
+    "required": [
+      "record_date",
+      "seats_total"
+    ]
+  }
+}

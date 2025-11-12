@@ -1,0 +1,26 @@
+{
+  "identifier": "gh-copilot-seats-webhook",
+  "title": "GH Copilot Seats Snapshot",
+  "enabled": true,
+  "mappings": [
+    {
+      "filter": ".body.kind == \"gh-copilot-seats\"",
+      "blueprint": "github_copilot_seats",
+      "entity": {
+        "identifier": ".body.record.record_date",
+        "title": "\"Seats \" + .body.record.record_date",
+        "properties": {
+          "record_date": ".body.record.record_date",
+          "seats_total": ".body.record.seats_total",
+          "seats_active_14d": ".body.record.seats_active_14d",
+          "seats_active_30d": ".body.record.seats_active_30d"
+        }
+      }
+    }
+  ],
+  "security": {
+    "secret": "set-a-strong-secret",
+    "signatureHeaderName": "X-Signature",
+    "signatureAlgorithm": "sha256"
+  }
+}

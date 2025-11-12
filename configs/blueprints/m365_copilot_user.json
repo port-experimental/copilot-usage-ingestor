@@ -1,0 +1,75 @@
+{
+  "identifier": "m365_copilot_user",
+  "title": "M365 Copilot User Detail",
+  "icon": "User",
+  "schema": {
+    "properties": {
+      "period": {
+        "type": "string",
+        "title": "Period"
+      },
+      "report_date": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Report Date"
+      },
+      "user_principal_name": {
+        "type": "string",
+        "title": "UPN (if not anonymized)"
+      },
+      "user_hash": {
+        "type": "string",
+        "title": "User Hash (sha256 of UPN)"
+      },
+      "last_activity_date": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Last Activity"
+      },
+      "teams_copilot_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Teams Copilot Last Activity"
+      },
+      "word_copilot_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Word Copilot Last Activity"
+      },
+      "excel_copilot_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Excel Copilot Last Activity"
+      },
+      "ppt_copilot_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "PowerPoint Copilot Last Activity"
+      },
+      "outlook_copilot_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Outlook Copilot Last Activity"
+      },
+      "onenote_copilot_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "OneNote Copilot Last Activity"
+      },
+      "loop_copilot_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Loop Copilot Last Activity"
+      },
+      "chat_last_activity": {
+        "type": "string",
+        "format": "date-time",
+        "title": "Copilot Chat Last Activity"
+      }
+    },
+    "required": [
+      "report_date",
+      "user_hash"
+    ]
+  }
+}
