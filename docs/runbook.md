@@ -12,7 +12,7 @@ Upload the JSON files in `configs/blueprints/` via Port Builder (Edit JSON) or t
 ## Wire up data sources & mappings
 - **GitHub Copilot metrics** — keep Port’s built-in integration and add `configs/mappings/github_copilot_mapping_override.yaml` to enrich editor/language/chat fields.
 - **GitHub seats snapshot** — create a Webhook data source, paste `configs/mappings/webhook_github_seats.json`, then save the ingestion URL + secret as env vars.
-- **M365 Copilot** — create two Webhook data sources using `configs/mappings/webhook_m365_summary.json` and `configs/mappings/webhook_m365_users.json`; store URLs + secret.
+- **M365 Copilot** — create two Webhook data sources using `configs/mappings/webhook_m365_summary.json` and `configs/mappings/webhook_m365_users.json` store URLs + secret.
 
 > Prefer Webhooks for simplicity. You can also upsert directly through Port’s Entities API if needed.
 
@@ -27,7 +27,7 @@ Follow `docs/tokens-and-permissions.md` to mint:
 - Toggle `INGEST_GITHUB` / `INGEST_M365` if you want to run one source at a time.
 - When using webhooks, set `USE_PORT_WEBHOOK=true` and provide the seats + M365 ingestion URLs with a shared secret.
 
-## Run locally for the first backfill
+## Run locally
 ```bash
 cd worker/go-ingestor
 go build -o ingest ./...

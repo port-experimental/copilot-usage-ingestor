@@ -17,5 +17,3 @@
 - Auth: `POST /v1/auth/access_token` (client ID/secret → access token)
 - Entities: `POST /v1/blueprints/{blueprint}/entities?upsert=true`
 - Webhooks: create “Webhook” data source and paste mappings from `configs/mappings/`
-
-Tip: when in doubt, use **webhook ingestion** for quick wins; you can always switch to direct API later.
