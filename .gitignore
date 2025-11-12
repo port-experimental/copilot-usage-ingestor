@@ -3,3 +3,4 @@ worker/go-ingestor/.gocache
 worker/go-ingestor/ingestor
 **/.DS_Store
 .DS_Store
+scripts/

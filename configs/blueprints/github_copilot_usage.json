@@ -1,7 +1,7 @@
 {
   "identifier": "github_copilot_usage",
   "title": "GitHub Copilot Usage",
-  "icon": "Github",
+  "icon": "GithubCopilot",
   "schema": {
     "properties": {
       "record_date": {
@@ -106,6 +106,12 @@
       "target": "_team",
       "required": false,
       "many": false
+    },
+    "users_usage": {
+      "title": "Github Port Users",
+      "target": "_user",
+      "required": false,
+      "many": true
     }
   }
 }

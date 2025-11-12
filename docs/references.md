@@ -7,8 +7,8 @@
 - API version header: `X-GitHub-Api-Version: 2022-11-28`
 
 **Microsoft Graph**
-- Summary: `GET /beta/reports/getMicrosoft365CopilotUserCountSummary(period='D7|D30|D90|D180|ALL')?$format=application/json`
-- User detail: `GET /beta/reports/getMicrosoft365CopilotUsageUserDetail(period='D30')?$format=application/json`
+- Summary: `GET /beta/reports/getMicrosoft365CopilotUserCountSummary(period='D7|D30|D90|D180|ALL')` (today this surfaces CSV even when `$format=application/json`; the ingestor handles either encoding).
+- User detail: `GET /beta/reports/getMicrosoft365CopilotUsageUserDetail(period='D30')` (also returns CSV until the JSON contract GA’s; we normalize column headers before ingesting).
 - Licenses: `GET /v1.0/subscribedSkus`
 - OAuth2: `https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token` (client credentials)
 

@@ -12,7 +12,32 @@ Upload the JSON files in `configs/blueprints/` via Port Builder (Edit JSON) or t
 ## Wire up data sources & mappings
 - **GitHub Copilot metrics** — keep Port’s built-in integration and add `configs/mappings/github_copilot_mapping_override.yaml` to enrich editor/language/chat fields.
 - **GitHub seats snapshot** — create a Webhook data source, paste `configs/mappings/webhook_github_seats.json`, then save the ingestion URL + secret as env vars.
-- **M365 Copilot** — create two Webhook data sources using `configs/mappings/webhook_m365_summary.json` and `configs/mappings/webhook_m365_users.json` store URLs + secret.
+- **M365 Copilot** — create two Webhook data sources using `configs/mappings/webhook_m365_summary.json` and `configs/mappings/webhook_m365_users.json` and store their URLs + secret.
+
+### Create the webhook data sources
+**Builder UI (no code):**
+1. Sign in to Port Builder and open your workspace.
+2. Go to **Data sources** → **New data source** → select **Webhook**.
+3. In the *General* tab:
+   - Set **Identifier** to match the JSON (e.g., `gh-copilot-seats-webhook`, `m365-copilot-summary-webhook`, `m365-copilot-users-webhook`).
+   - Give it a descriptive **Title** (the defaults from the JSON are fine).
+4. Switch to the **Mappings** tab → click **Edit JSON** → paste the contents of the corresponding file from `configs/mappings/`. Save the JSON.
+5. In the **Security** section, replace the placeholder `security.secret` value with a randomly generated string (record it—you’ll need it in `.env`). Keep the default header (`X-Signature`) and algorithm (`sha256`).
+6. Click **Create data source**. Port will display the webhook ingestion URL in the right-hand panel; copy it along with the secret you set.
+7. Repeat for the remaining two mapping files. When finished you should have three webhook URLs + secrets ready for `PORT_WEBHOOK_SEATS_URL`, `PORT_WEBHOOK_M365_SUMMARY_URL`, and `PORT_WEBHOOK_M365_USERS_URL` (and a shared `PORT_WEBHOOK_SECRET` if you used the same value).
+
+**Port API (documented at `docs.port.io/api/#tag/Data-Sources/operation/createDataSource`):**
+```bash
+PORT_API_BASE=https://api.getport.io        # or https://api.us.getport.io
+PORT_TOKEN=...                              # access token or client-credentials token
+
+curl -X POST "$PORT_API_BASE/v1/data-sources" \
+  -H "Authorization: Bearer $PORT_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data-binary @configs/mappings/webhook_github_seats.json
+```
+Each JSON file already matches the webhook data source schema exposed by the API; edit the `security.secret` value (and any titles) before posting. If you prefer to inline the JSON manually, mirror the structure shown in the Swagger reference.
+Repeat for the M365 summary and user files. The response payload (and `GET /v1/data-sources/{identifier}`) contains the webhook URL and security metadata—store them in your secret manager and reference them in `PORT_WEBHOOK_*` variables.
 
 > Prefer Webhooks for simplicity. You can also upsert directly through Port’s Entities API if needed.
 
