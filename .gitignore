@@ -1,3 +1,5 @@
 worker/go-ingestor/.gocache
 .vscode/*
 worker/go-ingestor/ingestor
+**/.DS_Store
+.DS_Store
